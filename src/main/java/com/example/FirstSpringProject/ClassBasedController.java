@@ -1,4 +1,5 @@
 package com.example.FirstSpringProject;
+import com.example.FirstSpringProject.DatabaseConnect;
 
 //import reactor.core.publisher.Flux;
 //import reactor.core.publisher.Mono;
@@ -14,37 +15,32 @@ import java.util.ArrayList;
 @RequestMapping("/app") //delegate mapping
 //@SpringBootApplication
 public class ClassBasedController {
-//    @Autowired
-    private
-    ArrayList<String> tasks=new ArrayList<>();
-
-    // dbOBJECT db=new db();
-    // db.saveObject(task);
-
+    DatabaseConnect db=new DatabaseConnect();
     public ClassBasedController() {
-        // pass a resource here through params instead of
-        // direct DB queries
+        db.EstablishConnnect();
     }
     @GetMapping("/")
     public String tt(){return "Home method";}
 
     @RequestMapping("/addtask/{taskString}")
     public String getusedtothis(@PathVariable("taskString")String task){
-        tasks.add(task);
-        return "task has been added as the "+tasks.size()+"th task";
+//        tasks.add(task);
+        db.add_task(task);
+        return "task has been added ";
     }
 
     @RequestMapping("/gettasks")
     public String getUser() {
-        StringBuilder s= new StringBuilder();
-        for(String g:tasks)
-            s.append(g).append("\n");
-        return s.toString();
+//        StringBuilder s= new StringBuilder();
+//        for(String g:tasks)
+//            s.append(g).append("\n");
+//        return s.toString();
+        return db.get_task();
     }
 
     @RequestMapping("/remove_task/{id}")
     public String getUserCustomers(@PathVariable("id")int id) {
-        tasks.remove(id);
+//        tasks.remove(id);
         return "Task Removed";
     }
 
